@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import asyncio
 import html_parser
 
-DAYS = 200  # DAYS <= 696
+DAYS = 100  # DAYS <= 696
 
 headers = {
     "GET": "/xcs/yqtb/202209/8ac84d72227c4a318694ddae45412c9a.shtml HTTP/1.1",
