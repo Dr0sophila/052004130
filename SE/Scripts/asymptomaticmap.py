@@ -10,10 +10,12 @@ table = table.drop(["兵团"], axis=1)
 
 
 
-date = table.iloc[:, 0].values
+date = table.iloc[:, 0].values.tolist()
 
 my_data = []
-for index, day in enumerate(date):
+ir=enumerate(date)
+buffer=[]
+for index, day in ir:
     data = []
 
     re_sort = table.iloc[index, :]
@@ -21,17 +23,23 @@ for index, day in enumerate(date):
     re_sort.sort_values(by=index, ascending=False, inplace=True)
 
 
+    if re_sort[index][0] == 0:
+        buffer.append(day)
+        continue
+
 
     for province in re_sort.index.values:
         data.append({
             "name": province, "value": [float(table.loc[index, province]), 1, province]
         })
+
     dict = {
         "time": date[index],
         "data": data,
     }
     my_data.append(dict)
-
+for i in buffer:
+    date.remove(i)
 
 
 def get_year_chart(year: str):
@@ -60,8 +68,7 @@ def get_year_chart(year: str):
             .set_global_opts(
             datazoom_opts=opts.DataZoomOpts(range_start=10,range_end=30),
             title_opts=opts.TitleOpts(
-                title="中国每日确诊",
-                subtitle="人",
+                title="中国每日无症状",
                 pos_left="center",
                 pos_top="top",
                 title_textstyle_opts=opts.TextStyleOpts(
@@ -156,7 +163,7 @@ def get_timeline():
         orient="vertical",
         is_auto_play=True,
         is_inverse=True,
-        play_interval=7000,
+        play_interval=5000,
         pos_left="null",
         pos_right="5",
         pos_top="20",

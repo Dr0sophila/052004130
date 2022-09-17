@@ -1,19 +1,19 @@
+import numpy as np
 import pandas as pd
 import pyecharts.options as opts
 from pyecharts.globals import ThemeType
 from pyecharts.commons.utils import JsCode
 from pyecharts.charts import Timeline, Grid, Bar, Map, Pie, Page
 
-
 table = pd.read_excel('../data.xlsx', sheet_name="每日确诊")
-table = table.drop(['香港', "澳门", "台湾","兵团"], axis=1)
+table = table.drop(['香港', "澳门", "台湾", "兵团"], axis=1)
 
-
-
-date = table.iloc[:, 0].values
+date = table.iloc[:, 0].values.tolist()
 
 my_data = []
-for index, day in enumerate(date):
+ir=enumerate(date)
+buffer=[]
+for index, day in ir:
     data = []
 
     re_sort = table.iloc[index, :]
@@ -21,18 +21,23 @@ for index, day in enumerate(date):
     re_sort.sort_values(by=index, ascending=False, inplace=True)
 
 
+    if re_sort[index][0] == 0:
+        buffer.append(day)
+        continue
+
 
     for province in re_sort.index.values:
         data.append({
             "name": province, "value": [float(table.loc[index, province]), 1, province]
         })
+
     dict = {
         "time": date[index],
         "data": data,
     }
     my_data.append(dict)
-
-
+for i in buffer:
+    date.remove(i)
 
 def get_year_chart(year: str):
     map_data = [
@@ -58,10 +63,9 @@ def get_year_chart(year: str):
             },
         )
             .set_global_opts(
-            datazoom_opts=opts.DataZoomOpts(range_start=10,range_end=30),
+            datazoom_opts=opts.DataZoomOpts(range_start=10, range_end=30),
             title_opts=opts.TitleOpts(
                 title="中国每日确诊",
-                subtitle="人",
                 pos_left="center",
                 pos_top="top",
                 title_textstyle_opts=opts.TextStyleOpts(
@@ -117,7 +121,7 @@ def get_year_chart(year: str):
                 pos_left="10",
                 pos_top="center",
                 range_text=["人数分布", ""],
-                range_color=["white",  "red"],
+                range_color=["white", "red"],
                 textstyle_opts=opts.TextStyleOpts(color="#ddd"),
                 min_=min_data,
                 max_=max_data,
@@ -130,7 +134,7 @@ def get_year_chart(year: str):
             .add(
             bar,
             grid_opts=opts.GridOpts(
-                pos_left="60", pos_right="55%", pos_top="20%", pos_bottom="10"
+                pos_left="90", pos_right="55%", pos_top="20%", pos_bottom="10"
             ),
         )
             .add(
@@ -146,7 +150,7 @@ def get_year_chart(year: str):
 def get_timeline():
     time_list = date
     timeline = Timeline(
-        init_opts=opts.InitOpts(height="700px",width="1800px", theme=ThemeType.DARK)
+        init_opts=opts.InitOpts(height="700px", width="1800px", theme=ThemeType.DARK)
     )
     for y in time_list:
         g = get_year_chart(year=y)
@@ -156,7 +160,7 @@ def get_timeline():
         orient="vertical",
         is_auto_play=True,
         is_inverse=True,
-        play_interval=7000,
+        play_interval=5000,
         pos_left="null",
         pos_right="5",
         pos_top="20",

@@ -13,8 +13,8 @@ def main():
 
     diagnosis, asymptomatic = write_data.write(china_total, province_list)
 
-    show_graphs.show_data("每日确诊", diagnosis)
-    show_graphs.show_data("每日无症状", asymptomatic)
+    show_graphs.show_data("每日确诊", diagnosis,"confirm")
+    show_graphs.show_data("每日无症状", asymptomatic,"asymptomatic")
 
 
 if __name__ == '__main__':
