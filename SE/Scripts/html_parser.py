@@ -45,6 +45,6 @@ class Parser:
         mc_new_diagnosis = re.findall(r"澳门特别行政区(\d+)例", paragraph[2])
         tw_new_diagnosis = re.findall(r"台湾地区(\d+)例", paragraph[2])
 
-        province_list["香港"].update_asymptomatic(date, hk_new_diagnosis[0])
-        province_list["澳门"].update_asymptomatic(date, mc_new_diagnosis[0])
-        province_list["台湾"].update_asymptomatic(date, tw_new_diagnosis[0])
+        province_list["香港"].update_diagnosis(date, hk_new_diagnosis[0])
+        province_list["澳门"].update_diagnosis(date, mc_new_diagnosis[0])
+        province_list["台湾"].update_diagnosis(date, tw_new_diagnosis[0])

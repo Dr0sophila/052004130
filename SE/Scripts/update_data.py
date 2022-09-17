@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import asyncio
 import html_parser
 
-DAYS = 24
+DAYS = 5
 
 headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -24,7 +24,7 @@ headers = {
 def get_homepage_url() -> list[str]:
     base_url = 'http://www.nhc.gov.cn/xcs/yqtb/list_gzbd'
     homepage_url_list = [base_url + ".shtml"]
-    for i in range(2, 9):
+    for i in range(2, 11):
         homepage_url_list.append(base_url + "_%d.shtml" % i)
     # for url in homepage_url_list:
     #     print(url)

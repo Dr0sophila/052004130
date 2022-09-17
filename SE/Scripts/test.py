@@ -1,3 +1,4 @@
+import pandas as pd
 import pyecharts.options as opts
 from pyecharts.globals import ThemeType
 from pyecharts.commons.utils import JsCode
@@ -11,21 +12,28 @@ Gallery 使用 pyecharts 1.0.0
 
 1、
 """
+table = pd.read_excel('../data.xlsx', sheet_name="每日确诊")
+row = table.iloc[[0]]
+print(table.iloc[:,0].values)
+date=[12345, 2000, 2005, 2010, 2015]
+
+my_data=[]
 
 data = [
     {
-        "time": 1980,
+        "time": "123",
         "data": [
-            {"name": "台湾", "value": [633.76, 12.28, "台湾"]},
-            {"name": "香港", "value": [432.47, 8.38, "香港"]},
-            {"name": "江苏", "value": [319.8, 6.2, "江苏"]},
-            {"name": "西藏", "value": [311.89, 6.05, "西藏"]},
-            {"name": "山东", "value": [292.13, 5.66, "山东"]},
-            {"name": "辽宁", "value": [281, 5.45, "辽宁"]},
-            {"name": "广东", "value": [249.65, 4.84, "广东"]},
-            {"name": "四川", "value": [229.31, 4.44, "四川"]},
-            {"name": "河南", "value": [229.16, 4.44, "河南"]},
-            {"name": "黑龙江", "value": [22221, 24.28, "黑龙江"]},
+            {"name": "台湾", "value": [1000, 133, "台湾"]},
+            {"name": "香港", "value": [432.47, 2, "香港"]},
+            {"name": "江苏", "value": [319.8, 2, "江苏"]},
+            {"name": "西藏", "value": [311.89, 2, "西藏"]},
+            {"name": "山东", "value": [292.13, 2, "山东"]},
+            {"name": "辽宁", "value": [281, 2, "辽宁"]},
+            {"name": "西藏", "value": [2000, 2, "西藏"]},
+            {"name": "广东", "value": [249.65, 2, "广东"]},
+            {"name": "四川", "value": [229.31, 2, "四川"]},
+            {"name": "河南", "value": [229.16, 2, "河南"]},
+            {"name": "黑龙江", "value": [221, 2, "黑龙江"]},
         ],
     },
     {
@@ -212,30 +220,6 @@ def get_year_chart(year: int):
         )
     )
 
-    pie_data = [[x[0], x[1][0]] for x in map_data]
-    percent_sum = sum([x[1][1] for x in map_data])
-    rest_value = 0
-    for d in map_data:
-        rest_percent = 100.0
-        rest_percent = rest_percent - percent_sum
-        rest_value = d[1][0] * (rest_percent / d[1][1])
-    pie_data.append(["其他省份", rest_value])
-    pie = (
-        Pie()
-            .add(
-            series_name="",
-            data_pair=pie_data,
-            radius=["12%", "20%"],
-            center=["75%", "85%"],
-            itemstyle_opts=opts.ItemStyleOpts(
-                border_width=1, border_color="rgba(0,0,0,0.3)"
-            ),
-        )
-            .set_global_opts(
-            tooltip_opts=opts.TooltipOpts(is_show=True, formatter="{b} {d}%"),
-            legend_opts=opts.LegendOpts(is_show=False),
-        )
-    )
 
     grid_chart = (
         Grid()
@@ -245,7 +229,6 @@ def get_year_chart(year: int):
                 pos_left="10", pos_right="45%", pos_top="70%", pos_bottom="5"
             ),
         )
-            .add(pie, grid_opts=opts.GridOpts())
             .add(map_chart, grid_opts=opts.GridOpts())
     )
 
@@ -255,7 +238,7 @@ def get_year_chart(year: int):
 # Draw Timeline
 
 def get_timeline():
-    time_list = [1980, 2000, 2005, 2010, 2015]
+    time_list = date
     timeline = Timeline(
         init_opts=opts.InitOpts(height="900px", theme=ThemeType.DARK)
     )

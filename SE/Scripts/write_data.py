@@ -41,11 +41,24 @@ def write(china_total, province_list):
         daily_asymptomatic.loc[key, 'index'] = index
 
     daily_asymptomatic.fillna(0, inplace=True)
+
     # daily_asymptomatic.to_csv("daily_asymptomatic.csv",encoding='GBK')
     # daily_asymptomatic.to_excel("daily_asymptomatic.xlsx",encoding='GBK',sheet_name="daily_asymptomatic")
-    daily_diagnosis.sort_values(by="index", ascending=False,inplace=True)
-    daily_asymptomatic.sort_values(by="index", ascending=False,inplace=True)
-    with pd.ExcelWriter('../1.xlsx') as writer:
+    daily_diagnosis.sort_values(by="index", ascending=False, inplace=True)
+    daily_asymptomatic.sort_values(by="index", ascending=False, inplace=True)
+
+    daily_diagnosis.drop('index', axis=1, inplace=True)
+    daily_asymptomatic.drop('index', axis=1, inplace=True)
+
+    buffer = daily_diagnosis.iloc[:, 33:]
+    buffer = buffer.diff(periods=-1)
+    daily_diagnosis = daily_diagnosis.drop(['香港', "澳门", "台湾"], axis=1)
+    daily_diagnosis = pd.concat([daily_diagnosis, buffer], axis=1)
+    print(buffer)
+
+    daily_asymptomatic = daily_asymptomatic.drop(['香港', "澳门", "台湾"], axis=1)
+
+    with pd.ExcelWriter('./data.xlsx') as writer:
         daily_diagnosis.to_excel(writer, sheet_name='每日确诊', index=True)
         daily_asymptomatic.to_excel(writer, sheet_name='每日无症状', index=True)
     return daily_diagnosis, daily_asymptomatic
