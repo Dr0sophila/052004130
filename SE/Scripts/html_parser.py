@@ -8,7 +8,12 @@ class Parser:
     def parse(paragraph, china, province_list):  # This paragraph is mainly about new cases.
 
         # 日期
-        date = re.findall(r"(\d+月\d+日)", paragraph[0])[0]
+        # date = re.findall(r"(\d)+月(\d+日)", paragraph[0])[0]
+
+        date = re.findall(r"(\d+)月(\d+)日", paragraph[0])[0]
+        date = "2022/" + date[0] + "/" + date[1]
+        print(date)
+
 
         # 中国大陆每日本土新增确诊人数
         domestic_new_diagnosis = re.findall(r"本土\D?\D?(\d*)例（", paragraph[0])

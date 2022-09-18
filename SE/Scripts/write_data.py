@@ -20,7 +20,7 @@ def write(china_total, province_list):
     for key in china_total.daily_diagnosis.keys():
         daily_diagnosis.loc[key, '大陆总计'] = china_total.daily_diagnosis[key]
 
-        days = re.findall(r"(\d+)月(\d+)日", key)
+        days = re.findall(r"2022/(\d+)/(\d+)", key)
         index = 100 * (int(days[0][0])) + int(days[0][1])
         daily_diagnosis.loc[key, 'index'] = index
 
@@ -36,7 +36,7 @@ def write(china_total, province_list):
     for key in china_total.daily_asymptomatic.keys():
         daily_asymptomatic.loc[key, '大陆总计'] = china_total.daily_asymptomatic[key]
 
-        days = re.findall(r"(\d+)月(\d+)日", key)
+        days = re.findall(r"2022/(\d+)/(\d+)", key)
         index = 100 * (int(days[0][0])) + int(days[0][1])
         daily_asymptomatic.loc[key, 'index'] = index
 
@@ -52,12 +52,13 @@ def write(china_total, province_list):
 
     buffer = daily_diagnosis.iloc[:, 33:]
     buffer = buffer.diff(periods=-1)
+
     daily_diagnosis = daily_diagnosis.drop(['香港', "澳门", "台湾"], axis=1)
     daily_diagnosis = pd.concat([daily_diagnosis, buffer], axis=1)
-    print(buffer)
+    daily_diagnosis.index.names = ['日期']
 
     daily_asymptomatic = daily_asymptomatic.drop(['香港', "澳门", "台湾"], axis=1)
-
+    daily_asymptomatic.index.names = ['日期']
     with pd.ExcelWriter('./data.xlsx') as writer:
         daily_diagnosis.to_excel(writer, sheet_name='每日确诊', index=True)
         daily_asymptomatic.to_excel(writer, sheet_name='每日无症状', index=True)

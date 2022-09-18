@@ -137,7 +137,7 @@ def get_year_chart(year: str):
             .add(
             bar,
             grid_opts=opts.GridOpts(
-                pos_left="60", pos_right="55%", pos_top="20%", pos_bottom="10"
+                pos_left="90", pos_right="55%", pos_top="20%", pos_bottom="10"
             ),
         )
             .add(
