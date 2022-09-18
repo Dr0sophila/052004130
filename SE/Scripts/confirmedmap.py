@@ -11,8 +11,8 @@ table = table.drop(['香港', "澳门", "台湾", "兵团"], axis=1)
 date = table.iloc[:, 0].values.tolist()
 
 my_data = []
-ir=enumerate(date)
-buffer=[]
+ir = enumerate(date)
+buffer = []
 for index, day in ir:
     data = []
 
@@ -20,11 +20,9 @@ for index, day in ir:
     re_sort = pd.DataFrame(re_sort[2:])
     re_sort.sort_values(by=index, ascending=False, inplace=True)
 
-
     if re_sort[index][0] == 0:
         buffer.append(day)
         continue
-
 
     for province in re_sort.index.values:
         data.append({
@@ -38,6 +36,7 @@ for index, day in ir:
     my_data.append(dict)
 for i in buffer:
     date.remove(i)
+
 
 def get_year_chart(year: str):
     map_data = [
@@ -171,7 +170,7 @@ def get_timeline():
     return timeline
 
 
-def page_simple_layout():
+def confirm_map():
     page = Page(layout=Page.SimplePageLayout)  # 简单布局
     # 将上面定义好的图添加到 page
     page.add(
@@ -180,4 +179,4 @@ def page_simple_layout():
     page.render("../templates/confirm_page.html")
 
 
-page_simple_layout()
+confirm_map()

@@ -4,17 +4,14 @@ from pyecharts.globals import ThemeType
 from pyecharts.commons.utils import JsCode
 from pyecharts.charts import Timeline, Grid, Bar, Map, Page
 
-
 table = pd.read_excel('../data.xlsx', sheet_name="每日无症状")
 table = table.drop(["兵团"], axis=1)
-
-
 
 date = table.iloc[:, 0].values.tolist()
 
 my_data = []
-ir=enumerate(date)
-buffer=[]
+ir = enumerate(date)
+buffer = []
 for index, day in ir:
     data = []
 
@@ -22,11 +19,9 @@ for index, day in ir:
     re_sort = pd.DataFrame(re_sort[2:])
     re_sort.sort_values(by=index, ascending=False, inplace=True)
 
-
     if re_sort[index][0] == 0:
         buffer.append(day)
         continue
-
 
     for province in re_sort.index.values:
         data.append({
@@ -66,7 +61,7 @@ def get_year_chart(year: str):
             },
         )
             .set_global_opts(
-            datazoom_opts=opts.DataZoomOpts(range_start=10,range_end=30),
+            datazoom_opts=opts.DataZoomOpts(range_start=10, range_end=30),
             title_opts=opts.TitleOpts(
                 title="中国每日无症状",
                 pos_left="center",
@@ -124,7 +119,7 @@ def get_year_chart(year: str):
                 pos_left="10",
                 pos_top="center",
                 range_text=["人数分布", ""],
-                range_color=["white",  "red"],
+                range_color=["white", "red"],
                 textstyle_opts=opts.TextStyleOpts(color="#ddd"),
                 min_=min_data,
                 max_=max_data,
@@ -153,7 +148,7 @@ def get_year_chart(year: str):
 def get_timeline():
     time_list = date
     timeline = Timeline(
-        init_opts=opts.InitOpts(height="700px",width="1800px", theme=ThemeType.DARK)
+        init_opts=opts.InitOpts(height="700px", width="1800px", theme=ThemeType.DARK)
     )
     for y in time_list:
         g = get_year_chart(year=y)
@@ -174,7 +169,7 @@ def get_timeline():
     return timeline
 
 
-def page_simple_layout():
+def asymptomatic_map():
     page = Page(layout=Page.SimplePageLayout)  # 简单布局
     # 将上面定义好的图添加到 page
     page.add(
@@ -183,4 +178,4 @@ def page_simple_layout():
     page.render("../templates/asymptomatic_page.html")
 
 
-page_simple_layout()
+asymptomatic_map()

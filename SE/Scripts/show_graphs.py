@@ -11,5 +11,5 @@ def show_data(title, data,name):
 
     ax = plt.gca()
     ax.axes.xaxis.set_visible(False)
-    plt.savefig("templates/"+name+".png")
+    # plt.savefig("templates/"+name+".png")
     plt.show()

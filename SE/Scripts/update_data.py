@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import asyncio
 import html_parser
 
-DAYS = 240
+DAYS = 240  # 爬取天数（可修改）
 
 headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -21,17 +21,19 @@ headers = {
 }
 
 
+# 根据命名规则生成不同的页面url
 def get_homepage_url() -> list[str]:
     base_url = 'http://www.nhc.gov.cn/xcs/yqtb/list_gzbd'
     homepage_url_list = [base_url + ".shtml"]
-    for i in range(2, 11):
+    for i in range(2, DAYS//24+1):
         homepage_url_list.append(base_url + "_%d.shtml" % i)
     # for url in homepage_url_list:
     #     print(url)
     return homepage_url_list
 
 
-async def get_url(homepage_url, url_list):
+# 通过请求主页url申请获得通报页面url并解析
+async def request_url(homepage_url, url_list):
     async with aiohttp.ClientSession() as session:
         async with session.get(homepage_url, headers=headers) as res:
             homepage_soup_res = await res.text()
@@ -41,11 +43,12 @@ async def get_url(homepage_url, url_list):
                     url_list.append("http://www.nhc.gov.cn" + a.attrs["href"])
 
 
+# 异步调用request_url生成通报页面url列表
 def get_urls() -> list[str]:
     start_time = time.time()
     url_list = []
 
-    tasks = [asyncio.ensure_future(get_url(url, url_list)) for url in get_homepage_url()]
+    tasks = [asyncio.ensure_future(request_url(url, url_list)) for url in get_homepage_url()]
     loop = asyncio.get_event_loop()
     loop.run_until_complete(asyncio.gather(*tasks))
 
@@ -53,7 +56,8 @@ def get_urls() -> list[str]:
     return url_list
 
 
-async def get_data( url, china_total, province_list):
+# 请求拥抱页面并解析
+async def get_data(url, china_total, province_list):
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=headers) as res:
             res = await res.text()
@@ -83,12 +87,13 @@ async def get_data( url, china_total, province_list):
                 print(paragraph)
 
 
+# 异步调用请求页面并写入数据
 def update(china_total, province_list):
     start_time = time.time()
     urls = get_urls()[0:DAYS]
-    tasks1 = [asyncio.ensure_future(get_data(url, china_total, province_list)) for url in urls[:DAYS//3]]
-    tasks2 = [asyncio.ensure_future(get_data(url, china_total, province_list)) for url in urls[DAYS//3:DAYS//3*2]]
-    tasks3 = [asyncio.ensure_future(get_data(url, china_total, province_list)) for url in urls[DAYS//3*2:]]
+    tasks1 = [asyncio.ensure_future(get_data(url, china_total, province_list)) for url in urls[:DAYS // 3]]
+    tasks2 = [asyncio.ensure_future(get_data(url, china_total, province_list)) for url in urls[DAYS // 3:DAYS // 3 * 2]]
+    tasks3 = [asyncio.ensure_future(get_data(url, china_total, province_list)) for url in urls[DAYS // 3 * 2:]]
     loop = asyncio.get_event_loop()
     loop.run_until_complete(asyncio.gather(*tasks1))
     time.sleep(1)
