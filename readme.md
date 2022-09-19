@@ -141,7 +141,7 @@ def parse(paragraph, china, province_list):
 * 2.使用协程，异步执行网络请求
 * 因为请求过快经常被服务器拉黑，所以没请求1/1的数据主动停止1秒
 
-![性能分析](D:\garbage\2022xiabannian\软工\性能分析.PNG)
+![性能分析](https://github.com/magical-psy/052004130/blob/master/blog/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.PNG)
 
 ## (3.4)每日热点的实现思路。简要介绍实现该功能的算法原理，可给出必要的步骤流程图、数学公 式推导和核心代码实现，并简要谈谈所采用算法的优缺点与可能的改进方案。
 
