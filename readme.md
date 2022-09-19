@@ -1,6 +1,6 @@
 [magical-psy/052004130 (github.com)](https://github.com/magical-psy/052004130)
 
-展示界面请移步SE/templates/index.html
+
 
 # 一、PSP表格 
 
@@ -171,6 +171,12 @@ q--代表预测模型中采用的预测误差的滞后数(lags)，也叫做MA/Mo
 使用pyechart生成动态图标可以用中国地图直观地展示跟个省份效果如图
 
 ![可视化效果](.\可视化效果.PNG)
+
+最终展示
+
+
+
+![结果](.\结果.jpeg)
 
 ## 三、心得体会 
 
