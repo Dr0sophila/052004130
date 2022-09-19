@@ -4,6 +4,7 @@ import write_data
 import show_graphs
 from Scripts.asymptomaticmap import asymptomatic_map
 from Scripts.confirmedmap import confirm_map
+from Scripts.makebar import create_bar
 
 
 def main():
@@ -16,8 +17,11 @@ def main():
     show_graphs.show_data("每日确诊", diagnosis, "confirm")  # 用图标展示数据
     show_graphs.show_data("每日无症状", asymptomatic, "asymptomatic")  # 用图标展示数据
 
+    # 创建html展示页面
     asymptomatic_map()
     confirm_map()
+    create_bar()
+
 
 if __name__ == '__main__':
     main()

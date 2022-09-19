@@ -27,8 +27,6 @@ def get_homepage_url() -> list[str]:
     homepage_url_list = [base_url + ".shtml"]
     for i in range(2, DAYS//24+1):
         homepage_url_list.append(base_url + "_%d.shtml" % i)
-    # for url in homepage_url_list:
-    #     print(url)
     return homepage_url_list
 
 
@@ -56,7 +54,7 @@ def get_urls() -> list[str]:
     return url_list
 
 
-# 请求拥抱页面并解析
+# 请求通报页面并解析
 async def get_data(url, china_total, province_list):
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=headers) as res:
