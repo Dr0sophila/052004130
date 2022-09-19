@@ -2,9 +2,9 @@ import info_list
 import update_data
 import write_data
 import show_graphs
-from Scripts.asymptomaticmap import asymptomatic_map
-from Scripts.confirmedmap import confirm_map
-from Scripts.makebar import create_bar
+from asymptomaticmap import asymptomatic_map
+from confirmedmap import confirm_map
+from makebar import create_bar
 
 
 def main():
