@@ -6,6 +6,7 @@ from pyecharts.commons.utils import JsCode
 from pyecharts.charts import Timeline, Grid, Bar, Map, Pie, Page
 
 table = pd.read_excel('../data.xlsx', sheet_name="每日确诊")
+table= table.head(50)
 table = table.drop(['香港', "澳门", "台湾", "兵团"], axis=1)
 
 date = table.iloc[:, 0].values.tolist()

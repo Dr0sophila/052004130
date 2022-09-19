@@ -4,7 +4,7 @@ from pyecharts.globals import ThemeType
 from pyecharts.commons.utils import JsCode
 from pyecharts.charts import Timeline, Grid, Bar, Map, Page
 
-table = pd.read_excel('../data.xlsx', sheet_name="每日无症状")
+table = pd.read_excel('../data.xlsx', sheet_name="每日无症状").head(50)
 table = table.drop(["兵团"], axis=1)
 
 date = table.iloc[:, 0].values.tolist()
