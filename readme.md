@@ -154,7 +154,7 @@ p--代表预测模型中采用的时序数据本身的滞后数(lags) ,也叫做
 d--代表时序数据需要进行几阶差分化，才是稳定的，也叫Integrated项。
 q--代表预测模型中采用的预测误差的滞后数(lags)，也叫做MA/Moving Average项
 
-![fom](.\fom.PNG)
+![fom](https://github.com/magical-psy/052004130/blob/master/blog/fom.PNG)
 
 建立模型，根据之间的数据预测后一天的数据，如果出现较大偏差，则发生了一些突然状况。
 
@@ -170,13 +170,13 @@ q--代表预测模型中采用的预测误差的滞后数(lags)，也叫做MA/Mo
 
 使用pyechart生成动态图标可以用中国地图直观地展示跟个省份效果如图
 
-![可视化效果](.\可视化效果.PNG)
+![可视化效果](https://github.com/magical-psy/052004130/blob/master/blog/%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%88%E6%9E%9C.PNG)
 
 最终展示
 
 
 
-![结果](.\结果.jpeg)
+![结果](https://github.com/magical-psy/052004130/blob/master/blog/%E7%BB%93%E6%9E%9C.jpeg)
 
 ## 三、心得体会 
 
